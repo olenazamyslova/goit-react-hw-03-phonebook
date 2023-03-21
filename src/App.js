@@ -35,22 +35,21 @@ class App extends Component {
 
   repeatControl = (data) => {
     const { contacts } = this.state;
-    const nameArray = contacts.map((contact) => contact.name);
-
-    if (!nameArray.includes(data.name)) {
-      const newContact = {
-        id: uuidv4(),
-        name: data.name,
-        number: data.number,
-      };
-
-      this.setState((prevState) => ({
-        ...prevState,
-        contacts: [...prevState.contacts, newContact],
-      }));
-    } else {
+    const isExist = contacts.find((contact) => contact.name === data.name);
+    if (isExist) {
       alert("Контакт вже є у телефонній книзі!!!");
-    }
+      return;
+    };
+
+    const newContact = {
+      id: uuidv4(),
+      name: data.name,
+      number: data.number,
+    };
+    this.setState((prevState) => ({
+      ...prevState,
+      contacts: [...prevState.contacts, newContact],
+    }));
   };
 
   elementDelete = (arr, idContact) => {
